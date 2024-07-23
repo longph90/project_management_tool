@@ -51,25 +51,11 @@ pg = st.navigation(pages=[
     about_page, 
     wbs_page,
     timesheet_page,
-    sync_page,
-    chat_page,
-    page_test,
+    #sync_page,
+    #chat_page,
+    #page_test,
     config_page
     ])
-
-# page navigation
-if pg.title == "Sync Data":
-    import views.sync_data as sync_data
-    sync_data.main()
-if pg.title == "Config Settings":
-    import views.config as config
-    config.main()
-if pg.title == "WBS":
-    import views.wbs as wbs
-    wbs.main()
-if pg.title == "Timesheet":
-    import views.timesheet as timesheet
-    timesheet.main()    
 
 
 # Shared all pages

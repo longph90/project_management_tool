@@ -2,32 +2,24 @@ import streamlit as st
 import pandas as pd
 import openpyxl
 
-def show_wbs_data():
-    if 'tasklist_df' in st.session_state:
-        st.dataframe(st.session_state['tasklist_df'])
-    else:
-        st.write("No WBS data available. Please upload a file in the Upload File section.")
-
-def show_timesheet_data():
-    if 'timesheet_df' in st.session_state:
-        st.dataframe(st.session_state['timesheet_df'])
-    else:
-        st.write("No timesheet data available. Please upload a file in the Upload File section.")
-
-def main():
-    st.title = "WBS data"
-    st.write(f"openpyxl version: {openpyxl.__version__}")
+# Initialize session state for file storage
+if 'wbs_file' not in st.session_state:
+    st.session_state.wbs_file = None
+if 'timesheet_file' not in st.session_state:
+    st.session_state.timesheet_file = None
     
-    uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
-
-    if uploaded_file is not None:
-        df = pd.read_excel(uploaded_file)
-        st.write(df)
+def display_data():
+    st.title("WBS Data")
+    
+    # Display WBS file
+    if st.session_state.wbs_file is not None:
+        st.write("WBS File:")
+        df_wbs = pd.read_excel(st.session_state.wbs_file)
+        st.write(df_wbs)
     else:
-        st.write("Please upload an Excel file.")
+        st.write("No WBS file uploaded.")
 
 
-if __name__ == "__main__":
-    main()    
+display_data()
 
 
