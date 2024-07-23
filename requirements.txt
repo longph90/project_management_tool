@@ -1,7 +1,7 @@
 emoji==2.12.1
 langchain_core==0.2.22
 langchain_openai==0.1.17
-openpyxl==3.1.2
-openpyxl==3.1.5
+openpyxl>=3.1.0
 pandas==2.2.2
 streamlit==1.36.0
+
