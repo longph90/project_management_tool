@@ -10,6 +10,12 @@ about_page = st.Page(
     default=True,
 )
 
+estimations_page = st.Page(
+    title="Effort Estimation",
+    icon=":material/calculate:",
+    page="views/estimations.py",
+)
+
 wbs_page = st.Page(
     title="WBS",
     icon=":material/task:",
@@ -46,16 +52,26 @@ config_page = st.Page(
     page="views/config.py",
 )
 
+member_page = st.Page(
+    title="Member List",
+    icon=":material/person:",
+    page="views/members.py",
+)
+
 # Navigation bar
-pg = st.navigation(pages=[
-    about_page, 
-    wbs_page,
-    timesheet_page,
-    #sync_page,
-    #chat_page,
-    #page_test,
-    config_page
-    ])
+pg = st.navigation(
+    pages=[
+        about_page,
+        estimations_page,
+        wbs_page,
+        timesheet_page,
+        # sync_page,
+        # chat_page,
+        # page_test,
+        member_page,
+        config_page,
+    ]
+)
 
 
 # Shared all pages
