@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 def show_wbs_data():
     if 'tasklist_df' in st.session_state:
@@ -14,7 +15,14 @@ def show_timesheet_data():
 
 def main():
     st.title = "WBS data"
-    show_wbs_data()
+    uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
+
+    if uploaded_file is not None:
+        df = pd.read_excel(uploaded_file)
+        st.write(df)
+    else:
+        st.write("Please upload an Excel file.")
+
 
 if __name__ == "__main__":
     main()    
