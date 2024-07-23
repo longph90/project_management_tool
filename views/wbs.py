@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import openpyxl
 
 def show_wbs_data():
     if 'tasklist_df' in st.session_state:
@@ -15,6 +16,8 @@ def show_timesheet_data():
 
 def main():
     st.title = "WBS data"
+    st.write(f"openpyxl version: {openpyxl.__version__}")
+    
     uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
 
     if uploaded_file is not None:
