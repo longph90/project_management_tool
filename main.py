@@ -1,17 +1,60 @@
 import streamlit as st
+import json
 
 # Page settings
 # Material Icons: https://fonts.google.com/icons
+
+# Initialize session state for file storage
+# Session for file upload
+if "upload_files" not in st.session_state:
+    st.session_state.upload_files = None
+if "wbs_file" not in st.session_state:
+    st.session_state.wbs_file = None
+if "timesheet_file" not in st.session_state:
+    st.session_state.timesheet_file = None
+if "resource_file" not in st.session_state:
+    st.session_state.resource_file = None
+
+# Session for DataFrame storage
+if "df_wbs" not in st.session_state:
+    st.session_state.df_wbs = None
+if "df_timesheet" not in st.session_state:
+    st.session_state.df_timesheet = None
+if "df_filtered" not in st.session_state:
+    st.session_state.df_filtered = None
+if "df_resource" not in st.session_state:
+    st.session_state.df_resource = None
+
+# ------------------ Streamlit UI Configuration ------------------ #
+st.set_page_config(
+    page_title="SPM",
+    page_icon=":brain:",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+# ------------------ Sidebar ------------------ #
+with st.sidebar:
+    st.markdown("Welcome to the project management app!")
+    st.markdown("Created by [Long Phan]")
+    st.markdown("""---""")
+
+# Add "FAQs" section to the sidebar
 
 about_page = st.Page(
     title="About Me",
     icon=":material/account_circle:",
     page="views/about_me.py",
-    default=True,
+)
+
+dashboard_page = st.Page(
+    title="Dashboard",
+    icon=":material/bar_chart:",
+    page="views/dashboard.py",
 )
 
 estimations_page = st.Page(
-    title="Effort Estimation",
+    title="Estimation",
     icon=":material/calculate:",
     page="views/estimations.py",
 )
@@ -46,39 +89,39 @@ page_test = st.Page(
     page="views/page_test.py",
 )
 
-config_page = st.Page(
-    title="Config Settings",
-    icon=":material/manufacturing:",
-    page="views/config.py",
-)
 
-member_page = st.Page(
-    title="Member List",
+resource_page = st.Page(
+    title="Resources",
     icon=":material/person:",
-    page="views/members.py",
+    page="views/resource.py",
+)
+upload_page = st.Page(
+    title="Template - Upload Files",
+    icon=":material/manufacturing:",
+    page="views/upload_files.py",
+    default=True,
+)
+faq_page = st.Page(
+    title="FAQ",
+    icon=":material/person:",
+    page="views/faq.py",
 )
 
-# Navigation bar
+# Load the selected page
 pg = st.navigation(
     pages=[
         about_page,
+        dashboard_page,
         estimations_page,
         wbs_page,
         timesheet_page,
         # sync_page,
         # chat_page,
         # page_test,
-        member_page,
-        config_page,
+        resource_page,
+        upload_page,
+        faq_page,
     ]
 )
-
-
-# Shared all pages
-st.sidebar.title("Navigation")
-st.sidebar.header("Project Management")
-st.sidebar.markdown("Welcome to the project management app!")
-st.sidebar.markdown("---")
-st.sidebar.text("Made with by Long Phan")
 
 pg.run()

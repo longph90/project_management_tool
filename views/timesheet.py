@@ -1,22 +1,49 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 import openpyxl
 
-# Initialize session state for file storage
-if 'wbs_file' not in st.session_state:
-    st.session_state.wbs_file = None
-if 'timesheet_file' not in st.session_state:
-    st.session_state.timesheet_file = None
+st.title("Timesheet Data")
 
-def display_data():
-    st.title("Timesheet Data")
-    
+with st.container(border=True):
     # Display Timesheet file
     if st.session_state.timesheet_file is not None:
-        st.write("Timesheet File:")
-        df_timesheet = pd.read_excel(st.session_state.timesheet_file)
-        st.write(df_timesheet)
-    else:
-        st.write("No Timesheet file uploaded.") 
+        st.write(st.session_state.df_timesheet)
 
-display_data()        
+        st.title("Summary:")
+
+        grouped_user = st.session_state.df_timesheet.groupby(["User"]).sum(
+            numeric_only=True
+        )
+        grouped_tow = st.session_state.df_timesheet.groupby(["Type Of Work"]).sum(
+            numeric_only=True
+        )
+
+        with st.container(border=True):
+            col1, col2 = st.columns(2, vertical_alignment="bottom")
+            with col1:
+                st.subheader("Grouped by User:")
+                st.dataframe(grouped_user)
+            with col2:
+                st.subheader("Grouped by Type of Work:")
+                st.dataframe(grouped_tow)
+
+        with st.container(border=True):
+            col1, col2 = st.columns(2, vertical_alignment="bottom")
+            with col1:
+                st.subheader("Worked Hours")
+                st.bar_chart(data=grouped_user, horizontal=True, y="Worked(h)")
+
+            with col2:
+                st.subheader("Type of Work")
+                sum_worklog = grouped_tow.sum(numeric_only=True)
+                grouped_tow["Worked(%)"] = (
+                    (grouped_tow["Worked(h)"]) / sum_worklog["Worked(h)"] * 100
+                )
+                st.bar_chart(
+                    grouped_tow,
+                    horizontal=False,
+                    y="Worked(%)",
+                )
+    else:
+        st.text("No data available. Please upload a file in the Upload File section.")

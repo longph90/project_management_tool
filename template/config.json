@@ -1,12 +1,12 @@
 {
     "tasks": {
-        "filename": "tp_task_list.xlsx"
+        "filename": "wbs.xlsx"
     },
     "timesheet": {
         "filename": "timesheet.xlsx"
     },
     "members": {
-        "filename": "members.xlsx"
+        "filename": "resource.xls"
     }
 
 }
